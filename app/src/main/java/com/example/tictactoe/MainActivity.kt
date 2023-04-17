@@ -8,8 +8,8 @@ import androidx.appcompat.app.AppCompatActivity
 class MainActivity : AppCompatActivity() {
     private lateinit var buttons: Array<Array<Button>>
     private var ticTacToe = TicTacToe()
-    private val player1 = Player("One")
-    private val player2 = Player("Two")
+    private lateinit var player1: Player
+    private lateinit var player2: Player
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -19,6 +19,11 @@ class MainActivity : AppCompatActivity() {
             arrayOf(findViewById(R.id.button7), findViewById(R.id.button8), findViewById(R.id.button9))
         )
 
+        // Retrieve player names from intent and create player objects
+        val player1Name = intent.getStringExtra("player1Name") ?: "One"
+        val player2Name = intent.getStringExtra("player2Name") ?: "Two"
+        player1 = Player(player1Name)
+        player2 = Player(player2Name)
 
         // Add click listeners to the buttons
         for (i in buttons.indices) {
@@ -182,7 +187,7 @@ private class TicTacToe {
         return false
     }
 }
-class Player(var name: String) {
+class Player(var name: String?) {
 
     var wins: Int = 0
     fun resetWins() {
@@ -192,8 +197,6 @@ class Player(var name: String) {
     fun addWin() {
         wins++
     }
-
-
 }
 
 
