@@ -13,7 +13,7 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.Toast
-import com.example.tictactoe.MainActivity
+import com.example.tictactoe.PlayerInfo
 import com.example.tictactoe.databinding.ActivityLoginBinding
 
 import com.example.tictactoe.R
@@ -111,7 +111,7 @@ class LoginActivity : AppCompatActivity() {
         ).show()
 
         // Start MainActivity
-        val intent = Intent(this, MainActivity::class.java)
+        val intent = Intent(this, PlayerInfo::class.java)
         startActivity(intent)
 
         // Finish LoginActivity
