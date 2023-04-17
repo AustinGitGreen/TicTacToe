@@ -24,7 +24,7 @@ class PlayerInfo : AppCompatActivity() {
             val player1Name = player1NameTextView.text?.toString()
             val player2Name = player2NameTextView.text?.toString()
 
-            if (player1Name != null && player2Name != null) {
+            if (!player1Name.isNullOrEmpty() && !player2Name.isNullOrEmpty()) {
                 // Use player1Name and player2Name in your game logic here
 
                 // For example, you could pass the names to another activity using an Intent:
