@@ -1,13 +1,15 @@
 package com.example.tictactoe
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
     private lateinit var buttons: Array<Array<Button>>
     var ticTacToe = TicTacToe()
+    private val player1 = Player("One")
+    private val player2 = Player("Two")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -57,9 +59,15 @@ class MainActivity : AppCompatActivity() {
     // Show a message indicating the winner
     private fun showWinner(winner: Int) {
         val message = when (winner) {
-            1 -> "Player 1 wins!"
+            1 -> {
+                player1.addWin()
+                "${player1.name} wins! (${player1.wins} wins)"
+            }
             -1 -> "Draw"
-            else -> "Player 2 wins!"
+            else -> {
+                player2.addWin()
+                "${player2.name} wins! (${player2.wins} wins)"
+            }
         }
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
         ticTacToe.reset()
@@ -73,26 +81,35 @@ class MainActivity : AppCompatActivity() {
         updateUI()
     }
 
+
+
 }
 class TicTacToe {
     private val board = Array(3) { IntArray(3) { 0 } }
-    private var player = 1
+    private var currentPlayer = 1
+    private val player1 = Player("One")
+    private val player2 = Player("Two")
 
     fun getBoard(): Array<IntArray> {
         return board
     }
 
-    fun getPlayer(): Int {
-        return player
+    fun getCurrentPlayer(): Int {
+        return currentPlayer
     }
 
     fun switchPlayer() {
-        player = if (player == 1) 2 else 1
+        currentPlayer = if (currentPlayer == 1) 2 else 1
     }
 
     fun makeMove(row: Int, col: Int): Boolean {
         if (board[row][col] == 0) {
-            board[row][col] = player
+            board[row][col] = currentPlayer
+            if (currentPlayer == 1) {
+                player1.addWin()
+            } else {
+                player2.addWin()
+            }
             return true
         }
         return false
@@ -145,7 +162,9 @@ class TicTacToe {
                 row[index] = 0
             }
         }
-        player = 1
+        player1.resetWins()
+        player2.resetWins()
+        currentPlayer = 1
     }
 
     fun isDraw(): Boolean {
@@ -163,7 +182,19 @@ class TicTacToe {
         return false
     }
 }
+class Player(var name: String) {
 
+    var wins: Int = 0
+    fun resetWins() {
+        wins = 0
+    }
+
+    fun addWin() {
+        wins++
+    }
+
+
+}
 
 
 
