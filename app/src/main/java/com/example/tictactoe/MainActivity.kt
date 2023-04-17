@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
     private lateinit var buttons: Array<Array<Button>>
-    var ticTacToe = TicTacToe()
+    private var ticTacToe = TicTacToe()
     private val player1 = Player("One")
     private val player2 = Player("Two")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -84,7 +84,7 @@ class MainActivity : AppCompatActivity() {
 
 
 }
-class TicTacToe {
+private class TicTacToe {
     private val board = Array(3) { IntArray(3) { 0 } }
     private var currentPlayer = 1
     private val player1 = Player("One")
